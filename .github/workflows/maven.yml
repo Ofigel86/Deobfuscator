@@ -1,0 +1,26 @@
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 23
+      uses: oracle/actions/setup-java@v1
+      with:
+        java-version: '23'
+        distribution: 'oracle'
+    - name: Build with Maven
+      run: mvn clean package
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: deobfuscator-jar
+        path: target/deobfuscator-1.0-SNAPSHOT.jar
